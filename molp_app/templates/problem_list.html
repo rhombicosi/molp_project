@@ -56,7 +56,9 @@
                         </form>
                     </td>
                     <td>
-                        <a href="{{ problem.result.url }}" class="btn btn-primary btn-sm" target="_blank">Download Result</a>
+                        {% if problem.result %}
+                            <a href="{{ problem.result.url }}" class="btn btn-primary btn-sm" target="_blank">Download Result</a>
+                        {% endif %}
                     </td>
                     <td>
                         <form method="post" action="{% url 'delete_problem' problem.pk %}">
