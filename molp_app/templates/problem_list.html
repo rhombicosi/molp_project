@@ -13,6 +13,10 @@
                 <th>Download</th>
                 <th>Submit</th>
                 <th>Job Number</th>
+                <th></th>
+                <th>Status</th>
+                <th></th>
+                <th>Result</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -33,6 +37,26 @@
                         {% if problem.jobNumber %}
                             {{ problem.jobNumber }}
                         {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'status_problem' problem.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary btn-sm">Check status</button>
+                        </form>
+                    </td>
+                    <td>
+                        {% if problem.status %}
+                            {{ problem.status }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'read_result' problem.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary btn-sm">Result</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="{{ problem.result.url }}" class="btn btn-primary btn-sm" target="_blank">Download Result</a>
                     </td>
                     <td>
                         <form method="post" action="{% url 'delete_problem' problem.pk %}">
