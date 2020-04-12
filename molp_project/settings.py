@@ -140,3 +140,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'molp_app/media')
 
 MEDIA_URL = '/media/'
 
+django_heroku.settings(locals())
+
