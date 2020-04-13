@@ -5,6 +5,8 @@
     1.  conda activate molp_env
 1.  When environment is activated install required packages
     1.  conda install django
+    1.  conda install django-heroku
+    1.  conda install django-crispy-forms
 1.  Get inside the project directory "molp_project" and perform database migrations
     1.  python manage.py makemigrations
     1.  python manage.py migrate
