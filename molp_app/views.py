@@ -145,7 +145,7 @@ def read_result(request, pk):
     (jobNumber, password) = (problem.jobNumber, problem.password)
 
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    new_name = 'result_' + timestr
+    new_name = 'result_' + timestr + '.txt'
 
     f = problem.result
 
