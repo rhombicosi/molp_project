@@ -94,11 +94,10 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     
       <script>
-        var socket = new WebSocket('ws://' + window.location.host + '/ws/scalarizations/')
-        // console.log('we are in scalarization')
+        var socket = new WebSocket('ws://' + window.location.host + ':8001/ws/scalarizations/')
 
         socket.onmessage = function(events){
-          var tasks = event.data;
+          var tasks = events.data;
           tasks = JSON.parse(tasks);
           console.log(tasks);
 
@@ -107,20 +106,16 @@
             status = tasks[i].task_status;
 
             var a = $('#process-raw-data-'+problem_id);
-            var dwnldbtn = $('#download-ch-'+problem_id);
-            // var dwnldbtn = document.getElementById('#download-ch-'+problem_id);
-            
+            var dwnldbtn = $('#download-ch-'+problem_id);            
 
             a.html(status);
 
             if (status != 'SUCCESS') {
-              dwnldbtn.css('visibility', 'hidden');
-              // dwnldbtn.style.visibility = "hidden";              
+              dwnldbtn.css('visibility', 'hidden');              
               a.html(status);
             }
             else if (status == 'SUCCESS') {
               dwnldbtn.css('visibility', 'visible');
-              // dwnldbtn.style.visibility = "visible";
               a.html(status);
             }
           }
@@ -128,14 +123,12 @@
       </script>
 
       <script>
-        var user_socket = new WebSocket('ws://' + window.location.host + '/ws/user_scalarizations/')
-        // console.log('we are in user scalarization')
-
+        var user_socket = new WebSocket('ws://' + window.location.host + ':8001/ws/user_scalarizations/')
+        
         user_socket.onmessage = function(events){
-          var tasks = event.data;
+          var tasks = events.data;
           tasks = JSON.parse(tasks)
-          // console.log(tasks)
-
+          
           for (let i = 0; i < tasks.length; i++) {
             problem_id = tasks[i].problem_pk
             status = tasks[i].task_status
@@ -155,7 +148,7 @@
             }
           }
         }
-      </script>
+      </script1>
 
     </body>
 </html>
