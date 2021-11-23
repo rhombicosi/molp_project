@@ -4,6 +4,7 @@
 /celery_log
 db.sqlite3
 .env
+celerybeat_schedule
 celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir

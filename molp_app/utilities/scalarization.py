@@ -163,17 +163,18 @@ def parse_parameters_url(problem, param):
 # calculate reference if it is not provided
 def calculate_reference(num_of_obj, models):
     ystar = {}
+    epsilon = 0.1
     
     for obj in range(num_of_obj):
         m = models[obj]
 
         # optimization with CBC
-        m.max_gap = 0.25
+        m.max_gap = 0.1
         status = m.optimize(max_seconds=90)
 
         if status == OptimizationStatus.OPTIMAL:
             print('optimal solution cost {} found'.format(m.objective_value))
-            ystar[obj] = m.objective_value
+            ystar[obj] = m.objective_value + epsilon
         elif status == OptimizationStatus.FEASIBLE:
             print('sol.cost {} found, best possible: {}'.format(m.objective_value, m.objective_bound))
             ystar[obj] = m.objective_value
@@ -300,12 +301,13 @@ def get_tasks_info():
             p.task_status = AsyncResult(p.task_id).status
 
             if p.task_status == 'PENDING':
-                p.task_status = 'Press the "Make Chebyshev" button'
+                p.task_status = 'Click the "Make Chebyshev" button'
 
             p.save()
             tasks_info.append({'task_id': p.task_id, 'task_status': p.task_status, 'problem_pk': p.id})
 
     async_to_sync(channel_layer.group_send)('scalarizations', {'type': 'send_scalarizations', 'text': tasks_info})
+
 
 
 @shared_task
@@ -318,12 +320,13 @@ def get_user_tasks_info():
             p.task_status = AsyncResult(p.task_id).status
 
             if p.task_status == 'PENDING':
-                p.task_status = 'Press the "Make Chebyshev" button'
+                p.task_status = 'Click the "Make Chebyshev" button'
 
             p.save()
             tasks_info.append({'task_id': p.task_id, 'task_status': p.task_status, 'problem_pk': p.id})
 
     async_to_sync(channel_layer.group_send)('user_scalarizations', {'type': 'send_user_scalarizations', 'text': tasks_info})
+
 
 
 # working with files locally

@@ -1,11 +1,12 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>{% block title %}MOLP Solver{% endblock %}</title>
-    <link rel="shortcut icon" type="image/jpg" href="../media/favicon.jpg"/>
+    <title>{% block title %}IDOL{% endblock %}</title>
+    <link rel="shortcut icon" type="image/jpg" href="{% get_media_prefix %}favicon.jpg"/>
     <style type="text/css">     
 
       .asteriskField {
@@ -96,8 +97,8 @@
       <script>
         var socket = new WebSocket('ws://' + window.location.host + ':8001/ws/scalarizations/')
 
-        socket.onmessage = function(events){
-          var tasks = events.data;
+        socket.onmessage = function(event){
+          var tasks = event.data;
           tasks = JSON.parse(tasks);
           console.log(tasks);
 
@@ -125,8 +126,8 @@
       <script>
         var user_socket = new WebSocket('ws://' + window.location.host + ':8001/ws/user_scalarizations/')
         
-        user_socket.onmessage = function(events){
-          var tasks = events.data;
+        user_socket.onmessage = function(event){
+          var tasks = event.data;
           tasks = JSON.parse(tasks)
           
           for (let i = 0; i < tasks.length; i++) {
@@ -148,7 +149,7 @@
             }
           }
         }
-      </script1>
+      </script>
 
     </body>
 </html>
