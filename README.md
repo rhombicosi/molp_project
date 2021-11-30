@@ -1,7 +1,8 @@
 
 [![License](https://img.shields.io/github/license/rhombicosi/molp_project)](LICENSE)
 ![Code size](https://img.shields.io/github/languages/code-size/rhombicosi/Idol)
-## **Web Service Idol description**
+[![DOI](https://zenodo.org/badge/393465636.svg)](https://zenodo.org/badge/latestdoi/393465636)
+## **IDOL web service description**
 Web Service Idol is a tool for generating Chebyshev scalarization to solve multiobjective linear optimization problems.
 
 As of now Idol accepts exclusively Gurobi multiobjective .lp format (see Gurobi lp format [documentation](https://www.gurobi.com/documentation/9.0/refman/lp_format.html#format:LP) )and returns scalarized problem as an .lp file.
@@ -24,60 +25,108 @@ The project uses Amazon S3 cloud to store files.
 
 As a modelling and optimization tool Idol uses open-source Python MIP and [CBC solver](https://github.com/coin-or/Cbc).
 
-## **Running project on Ubuntu 20.04 server**
+## **Running project on Ubuntu 20.04**
 
 ### **PostgreSQL-12 setup**
 
-1.  Install PostgreSQL
-    1. sudo apt install postgresql postgresql-contrib
-1.  Create database
-    1.  sudo -u postgres createdb molp
-1.  Start service
-    1.  sudo service postgresql start
+-  Install PostgreSQL
+```
+    sudo apt install postgresql postgresql-contrib
+```
+-  Create database and database user
+```
+    sudo -u postgres psql
+    CREATE DATABASE \<database_name>;
+    CREATE USER \<user_name> WITH PASSWORD '\<password>';
+    GRANT ALL PRIVILEGES ON DATABASE \<database_name> TO \<user_name>;
+    \q
+```
+-  Start postgresql service
+```
+    sudo service postgresql start
+```
 
 ### **Redis**
 
-1. Install Redis the latest version
-    1. wget http://download.redis.io/releases/redis-6.2.4.tar.gz
-    1. tar xzf redis-6.2.4.tar.gz
-    1. cd redis-6.2.4
-    1. make
+- Install Redis the latest version
+```
+    sudo apt install redis
+```
+- Start Redis server
+```
+    sudo redis-server
+```
+
+### **Amazon S3 storage**
+
+Follow the [guide](https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/) in order to create S3 Bucket for storing project files.
+
+### **.env file**
+
+Web service environment-specific paramters, e.g. database name, user and password, should be stored in .env file. 
+
+Create .env file in the root of the project directory according to the template .env_example.
+
+### **Start IDOL web service**
+
+-  Install Python 3.8.10 if not installed
+-  Install python3.8-venv
+-  Create and activate virtual environment 
+```
+    python3 -m venv /path/to/new/virtual/environment
+    . environment/bin/activate
+```
+-  Install psycopg2 dependencies
+```
+    sudo apt install python3-dev libpq-dev
+```
+-  Install dependencies:
+```
+    pip install -r requirements.txt
+```
+-  Perform database migrations
+```
+    python3 manage.py makemigrations
+    python3 manage.py migrate
+```
+-  Start development server
+```
+    python3 manage.py runserver
+```
     
-1. Create a configuration file (optional)
-   1. The config file example 6379.conf can be found in the project root directory
-    
-1. Start the Redis server
-    1. sudo src/redis-server /path/to/conf/6379.conf
+Application is available at http://127.0.0.1:8000/
 
 ### **Celery**
 
-1. Activate virtual environment
-1. Go to the project directory
-    1. cd /path/to/project/molp_project
-    
-1.  Start a new Celery worker with this command
-    1.  celery -A molp_project worker --loglevel=info
+- Activate virtual environment if it is not activated
+- Go to the project directory
+```
+    cd /path/to/project/molp_project
+```    
+- Start a new Celery worker
+```
+    celery -A molp_project worker --loglevel=info
+```
 
 Now application is ready to accept scalarization tasks.
 
-1. Start Celery beat
-    1.   celery -A molp_project beat -l INFO 
+- Start Celery beat
+```
+    celery -A molp_project beat -l INFO
+```
 
-### **Start Idol web service**
+Now application is ready to run scheduled tasks.
 
-1.  Install Python 3.8.10 if not installed
-1.  Install python3.8-venv
-1.  Create and activate virtual environment 
-    1.  python -m venv /path/to/new/virtual/environment
-    1.  environment\Scripts\activate.bat (Windows) or . environment/bin/activate (Ubuntu)
-1.  Install psycopg2 dependencies 
-    1. sudo apt install python3-dev libpq-dev
-1.  Install dependencies:
-    1.  pip install -r requirements.txt
-1.  Get inside the project directory "molp_project" and perform database migrations
-    1.  python manage.py makemigrations
-    1.  python manage.py migrate
-1.  Start development server
-    1.  python manage.py runserver
-    
-Application is available at http://127.0.0.1:8000/
+### **Running unit tests**
+
+- Activate virtual environment if it is not activated
+- Inside the project directory run tests with the command
+```
+    python3 manage.py test molp_app
+```
+
+
+
+
+
+

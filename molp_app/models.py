@@ -4,27 +4,25 @@ from django.contrib.auth.models import User
 
 class Problem(models.Model):
 
-    xml = models.FileField(upload_to='problems/xmls/', verbose_name='input file')
+    lp = models.FileField(upload_to='problems/lps/', verbose_name='input file')
     zips = models.FileField(upload_to='problems/zips/', verbose_name='zips', blank=True)
 
-    txt = models.FileField(upload_to='problems/txt/', blank=True)
     task_id = models.CharField(max_length=50, null=True, blank=True)
     task_status = models.CharField(max_length=50, null=True, blank=True)
 
     def delete(self, *args, **kwargs):
-        self.xml.delete()
-        self.txt.delete()
+        self.lp.delete()
         self.zips.delete()
         super().delete(*args, **kwargs)
 
     def file_name(self):
-        return self.xml.name.split('/')[2][:-40]
+        return self.lp.name.split('/')[2][:-40]
 
 
 class ProblemParameters(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE, related_name="parameters", null=True)
     weights = models.FileField(upload_to='problems/parameters/weights/', blank=True)
-    reference = models.FileField(upload_to='problems/parameters/reference/', blank=True, verbose_name="Y*")
+    reference = models.FileField(upload_to='problems/parameters/reference/', blank=True, verbose_name="Y")
 
     def delete(self, *args, **kwargs):
         self.weights.delete()
@@ -52,27 +50,25 @@ class ProblemChebyshev(models.Model):
 class UserProblem(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="problems", null=True)
-    xml = models.FileField(upload_to='problems/xmls/', verbose_name='input file')
+    lp = models.FileField(upload_to='problems/lps/', verbose_name='input file')
     zips = models.FileField(upload_to='problems/zips/', verbose_name='zips', blank=True)
 
-    txt = models.FileField(upload_to='problems/txt/', blank=True)
     task_id = models.CharField(max_length=50, null=True, blank=True)
     task_status = models.CharField(max_length=50, null=True, blank=True)
 
     def delete(self, *args, **kwargs):
-        self.xml.delete()
-        self.txt.delete()
+        self.lp.delete()
         self.zips.delete()
         super().delete(*args, **kwargs)
 
     def file_name(self):
-        return self.xml.name.split('/')[2][:-40]
+        return self.lp.name.split('/')[2][:-40]
 
 
 class UserProblemParameters(models.Model):
     problem = models.ForeignKey(UserProblem, on_delete=models.CASCADE, related_name="parameters", null=True)
     weights = models.FileField(upload_to='problems/parameters/weights/', blank=True)
-    reference = models.FileField(upload_to='problems/parameters/reference/', blank=True, verbose_name="Y*")
+    reference = models.FileField(upload_to='problems/parameters/reference/', blank=True, verbose_name="Y")
 
     def delete(self, *args, **kwargs):
         self.weights.delete()
