@@ -11,6 +11,8 @@
 /molp_project/__pycache__
 db.sqlite3
 .env
+/celery_log
+celerybeat-schedule
 celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir
