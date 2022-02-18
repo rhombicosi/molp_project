@@ -14,6 +14,12 @@ class ParametersForm(forms.ModelForm):
         fields = ('weights', 'reference')
 
 
+class MaxgapForm(forms.ModelForm):
+    class Meta:
+        model = Problem
+        fields = ('maxgap', 'maxtime')
+
+
 class UserProblemForm(forms.ModelForm):
     class Meta:
         model = UserProblem
@@ -24,3 +30,10 @@ class UserParametersForm(forms.ModelForm):
     class Meta:
         model = UserProblemParameters
         fields = ('weights', 'reference')
+
+
+class UserMaxgapForm(forms.ModelForm):
+    class Meta:
+        model = UserProblem
+        fields = ('maxgap', 'maxtime')
+
