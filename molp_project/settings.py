@@ -173,4 +173,6 @@ AWS_S3_OBJECT_PARAMETERS = {
 AWS_DEFAULT_ACL = 'public-read'
 AWS_LOCATION = 'static'
 
-DEFAULT_FILE_STORAGE = 'molp_project.storage_backends.MediaStorage'
+# DEFAULT_FILE_STORAGE = 'molp_project.storage_backends.MediaStorage'
+
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
