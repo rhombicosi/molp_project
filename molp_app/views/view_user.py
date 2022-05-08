@@ -165,18 +165,10 @@ def user_download_zip(request, pk):
 
     if request.method == 'POST':
         for ch in problem.chebyshev.all():
-            ch_url = ch.chebyshev.path
+            ch_url = ch.chebyshev.url
             ch_name = ch.chebyshev.name.split('/')[2]
-
-            in_memory_file = open(ch_url, "r")
-            lp = ""
-            buffer = 1
-            while buffer:
-                buffer = in_memory_file.read()
-                lp += buffer
-            in_memory_file.close()
-
-            zf.writestr(ch_name, lp)
+            in_memory_file = requests.get(ch_url, stream=True)
+            zf.writestr(ch_name, in_memory_file.text)
 
     zf.close()
 

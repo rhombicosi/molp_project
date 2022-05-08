@@ -17,18 +17,15 @@ s3 = boto3.resource('s3')
 
 
 def read_url(url):
-    in_memory_file = open(url, "r")
-   
+    in_memory_file = requests.get(url, stream=True)
     url_temp_file = NamedTemporaryFile()
-    
-    lp = ""
-    buffer = 1
-    while buffer:
-        buffer = in_memory_file.read()
-        lp += buffer
-    in_memory_file.close()
-    
-    url_temp_file.write(str.encode(lp))
+
+    for block in in_memory_file.iter_content(1024*8):
+        if not block:
+            break
+
+        url_temp_file.write(block)
+
     return url_temp_file
 
 
@@ -37,7 +34,7 @@ def read_url(url):
 # produce problem models for each objective
 def parse_gurobi_url(problem):
 
-    lp_temp_file = read_url(problem.lp.path)
+    lp_temp_file = read_url(problem.lp.url)
     lp_temp_file.flush()
     lp_temp_file.seek(0)
     lines = lp_temp_file.readlines()
@@ -142,7 +139,7 @@ def parse_gurobi_url(problem):
 def parse_parameters_url(problem, param):
 
     param_field = getattr(problem.parameters.all()[0], param)
-    param_temp_file = read_url(param_field.path)
+    param_temp_file = read_url(param_field.url)
 
     param_temp_file.flush()
     param_temp_file.seek(0)
