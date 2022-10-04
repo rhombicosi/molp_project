@@ -1,0 +1,9 @@
+.bgimg {
+    display: block;
+    text-align: center;
+    padding-top: 20%;
+}
+img {
+    max-width: 25%;
+    height: auto;
+}   
