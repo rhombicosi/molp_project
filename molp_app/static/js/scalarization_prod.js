@@ -3,7 +3,6 @@ var socket = new WebSocket('ws://' + window.location.host + ':8001/ws/scalarizat
 socket.onmessage = function(event){
         var tasks = event.data;
         tasks = JSON.parse(tasks);
-        console.log(tasks);
 
         for (let i = 0; i < tasks.length; i++) {
         problem_id = tasks[i].problem_pk;
