@@ -2,17 +2,7 @@
 
 {% load static %}
 {% block content %}
-<style type="text/css">
-    .bgimg {
-        display: block;
-        text-align: center;
-        padding-top: 20%;
-    }
-    img {
-        max-width: 25%;
-        height: auto;
-    }   
-</style>
+<link rel="stylesheet" href="{% get_static_prefix %}css/logo.css">
 <h2>IDOL Home page</h2>
 <p>Welcome to <b>I</b>nteractive-<b>D</b>emonstrating multiobjective <b>O</b>ptimization p<b>L</b>atform, {% if user.is_authenticated %}<b>{{ user.username }}</b>{% else %} <b>visitor</b> {% endif %}!!!</p>
 <p>

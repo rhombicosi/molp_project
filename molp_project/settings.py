@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'molp_app.context_processor.debug_set',
             ],
         },
     },
@@ -76,7 +77,6 @@ WSGI_APPLICATION = 'molp_project.wsgi.application'
 ASGI_APPLICATION = 'molp_project.asgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -103,7 +103,6 @@ CHANNEL_LAYERS = {
 
 
 # Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -122,7 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -136,7 +134,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -163,15 +161,15 @@ CELERY_BROKER_URL = config('REDIS_URL')
 CELERY_RESULT_BACKEND = config('REDIS_URL')
 
 # S3
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static'
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_LOCATION = 'static'
 
 # DEFAULT_FILE_STORAGE = 'molp_project.storage_backends.MediaStorage'
 
