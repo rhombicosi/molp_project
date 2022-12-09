@@ -19,7 +19,7 @@ botocore==1.20.92
 cached-property==1.5.1
 celery==5.2.2
 celery-progress==0.1.1
-certifi==2021.5.30
+certifi==2022.12.7
 cffi==1.14.5
 channels==3.0.4
 channels-redis==3.3.0
