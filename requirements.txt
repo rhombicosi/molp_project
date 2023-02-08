@@ -33,7 +33,7 @@ colorama==0.4.4
 command-not-found==0.3
 configobj==5.0.6
 constantly==15.1.0
-cryptography==3.4.7
+cryptography==39.0.1
 daphne==3.0.2
 dbus-python==1.2.16
 decorator==4.4.2
